@@ -34,7 +34,7 @@ The technical premise for how the script works is as follows:
   
   * The component of the item's favored damage type will be used for crafting the "Skill Rune" in the mod.
   
-* When the parsing is completed, write a component file into the mod, using a dummy template file to build off of. 
+* When the parsing is completed, write a component file into the mod, using a dummy template file to build off of. (**main()**)
 
 * Store the filepath of that component file, and create a corresponding blueprint to construct that component in-game. Again,
 use a dummy template file to build the blueprint.
