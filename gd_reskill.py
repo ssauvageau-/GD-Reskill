@@ -17,8 +17,8 @@ mod_tex = "reskill/skill_"
 bp = mod + r"\database\reskill\blueprints"
 comp = mod + r"\database\reskill\components"
 #template blueprint/component files contained within mod itself
-dummy_bp = bp + r"\dummy.dbr"
-dummy_comp = comp + r"\dummy.dbr"
+dummy_bp = r"blueprints\dummy.dbr"
+dummy_comp = r"components\dummy.dbr"
 #the smith we use in-game
 smith_table = mod + r"\database\reskill\creatures\reskillsmith_smith.dbr" #add entries to defaultRecipes,,
 
