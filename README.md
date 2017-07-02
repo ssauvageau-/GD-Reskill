@@ -11,6 +11,8 @@ For the script to work, Grim Dawn's game files *must* be extracted to the instal
 
 Beyond that, the entire process for generation is automatic.
 
+***
+
 The technical premise for how the script works is as follows:
 
 * Obtain a list of items which may have procs/skills on them that we care about. (**main()**)
@@ -39,6 +41,8 @@ use a dummy template file to build the blueprint.
 
 * Store the filepath of every blueprint, and then add all of those blueprints to a premade blacksmith file. When this is done,
 the mod is ready to be built and deployed.
+
+***
 
 ### dir.txt
 
