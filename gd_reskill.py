@@ -92,55 +92,55 @@ def process_damage(item):
 
 #assembles a dictionary pertaining to a particular item
 def process_item(item):
-    f = open(item)
-    want = False
-    for line in f:
-        if "itemSkillName" in line and ",," not in line:
-            want = True
-            break
-    if want:
-        itemSkill = ""
-        itemSkillLevel = ""
-        itemSkillController = ""
-        itemName = ""
-        itemLevel = ""
-        cmp = False #wanted to use 'complex' but evidently that's a python keyword
-        f.seek(0)
+    with open(item) as f:
+        want = False
         for line in f:
-            if "itemSkillName" in line:
-                itemSkill = line.split(",")[1]
-            elif "itemSkillLevelEq" in line:
-                raw = line.split(",")[1]
-                if "itemLevel" in raw:
-                    cmp = True
-                itemSkillLevel = raw
-            elif "itemSkillAutoController" in line and ",," not in line:
-                itemSkillController = line.split(",")[1]
-            elif "itemNameTag" in line and ",," not in line:
-                itemName = tags_items.get(line.split(",")[1])
-            elif "itemLevel" in line and ",," not in line:
-                itemLevel = line.split(",")[1]
-        if cmp:
-            itemSkillLevel = itemSkillLevel.replace("itemLevel", itemLevel)
-            add = int(itemSkillLevel.split("+")[1])
-            div = int(itemSkillLevel.split("/")[1].split("+")[0])
-            num = int(itemSkillLevel.split("/")[0])
-            itemSkillLevel = str(int(add + (num/div)))
-        if itemName in items_data and int(items_data[itemName]["itemLevel"]) < int(itemLevel):
-            del items_data[itemName]
-        elif itemName in items_data and int(items_data[itemName]["itemLevel"]) > int(itemLevel):
-            return
-        damage = process_damage(item)
-        items_data[itemName] = {
-            "itemSkill": itemSkill,
-            "itemSkillLevel": itemSkillLevel,
-            "itemSkillController": itemSkillController,
-            "itemLevel": itemLevel,
-            "file": item,
-            "icon": mod_tex + damage[0] + ".tex",
-            "name": itemName,
-            "component": damage[1]
-        }
+            if "itemSkillName" in line and ",," not in line:
+                want = True
+                break
+        if want:
+            itemSkill = ""
+            itemSkillLevel = ""
+            itemSkillController = ""
+            itemName = ""
+            itemLevel = ""
+            cmp = False #wanted to use 'complex' but evidently that's a python keyword
+            f.seek(0)
+            for line in f:
+                if "itemSkillName" in line:
+                    itemSkill = line.split(",")[1]
+                elif "itemSkillLevelEq" in line:
+                    raw = line.split(",")[1]
+                    if "itemLevel" in raw:
+                        cmp = True
+                    itemSkillLevel = raw
+                elif "itemSkillAutoController" in line and ",," not in line:
+                    itemSkillController = line.split(",")[1]
+                elif "itemNameTag" in line and ",," not in line:
+                    itemName = tags_items.get(line.split(",")[1])
+                elif "itemLevel" in line and ",," not in line:
+                    itemLevel = line.split(",")[1]
+            if cmp:
+                itemSkillLevel = itemSkillLevel.replace("itemLevel", itemLevel)
+                add = int(itemSkillLevel.split("+")[1])
+                div = int(itemSkillLevel.split("/")[1].split("+")[0])
+                num = int(itemSkillLevel.split("/")[0])
+                itemSkillLevel = str(int(add + (num/div)))
+            if itemName in items_data and int(items_data[itemName]["itemLevel"]) < int(itemLevel):
+                del items_data[itemName]
+            elif itemName in items_data and int(items_data[itemName]["itemLevel"]) > int(itemLevel):
+                return
+            damage = process_damage(item)
+            items_data[itemName] = {
+                "itemSkill": itemSkill,
+                "itemSkillLevel": itemSkillLevel,
+                "itemSkillController": itemSkillController,
+                "itemLevel": itemLevel,
+                "file": item,
+                "icon": mod_tex + damage[0] + ".tex",
+                "name": itemName,
+                "component": damage[1]
+            }
 
 def main():
     #fetch all items listed in given directory file
