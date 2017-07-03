@@ -25,6 +25,9 @@ smith_table = mod + r"\database\reskill\creatures\reskillsmith_smith.dbr" #add e
 #edit this to change when the components can be equipped on a character.
 levelReq = 85
 
+#set this to True to make the components require the level of the item the skill is from.
+iLevel = False
+
 targets = []
 items = []
 items_data = {}
@@ -203,7 +206,10 @@ def main():
         dict_comp["itemSkillName"] = dat["itemSkill"]
         dict_comp["itemSkillLevelEq"] = dat["itemSkillLevel"]
         dict_comp["itemSkillAutoController"] = dat["itemSkillController"]
-        dict_comp["levelRequirement"] = levelReq
+        if iLevel:
+            dict_comp["levelRequirement"] = dat["itemLevel"]
+        else:
+            dict_comp["levelRequirement"] = levelReq
         nm = r"\reskill_" + dat["name"].lower().replace(",","").replace(" ","").replace("'","") + ".dbr"
         with open(comp + nm, "w") as out:
             for entry in dict_comp:
