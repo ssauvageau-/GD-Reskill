@@ -213,7 +213,7 @@ def main():
         nm = r"\reskill_" + dat["name"].lower().replace(",","").replace(" ","").replace("'","") + ".dbr"
         with open(comp + nm, "w") as out:
             for entry in dict_comp:
-                out.write(entry + "," + dict_comp[entry] + ",\n")
+                out.write(entry + "," + str(dict_comp[entry]) + ",\n")
             out.close()
         dict_bp["FileDescription"] = dat["name"].replace(",", "")
         dict_bp["artifactName"] = "reskill/components" + nm.replace("\\", "/")
