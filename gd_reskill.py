@@ -6,6 +6,7 @@ install_prefix = r"C:\Program Files (x86)\Steam\steamapps\common\Grim Dawn"
 non_mod_dbr = install_prefix + r"\database"
 non_mod_comps = non_mod_dbr + r"\records\items\materia\compb_"
 non_mod_tags_items = install_prefix + r"\resources\text_en\tags_items.txt"
+gdx1_tags_items = install_prefix + r"\resources\text_en\tagsgdx1_items.txt"
 
 #hardcoded tags
 desc = "tagReskillCompDesc=\"Siphoned arcane power of an item into a component.\"^w^n(Used in Jewelry, Weapons, Head, and Hand armor)"
@@ -149,18 +150,32 @@ def process_item(item):
             }
 
 def main():
+    #get vanilla tags for items
+    for line in open(non_mod_tags_items):
+        if "=" in line:
+            tags_items.update({line.split("=")[0]:line.split("=")[1].replace("\n", "")})
+    #get gdx1 tags for items        
+    for line in open(gdx1_tags_items):
+        if "=" in line:
+            tags_items.update({line.split("=")[0]:line.split("=")[1].replace("\n", "")})
+            
     #fetch all items listed in given directory file
     for line in open("dir.txt"):
+        #mod items:
+        if line[:1] == '+':
+            targets.append(install_prefix + line[1:].rstrip().replace("/", "\\"))
+        #mod tags, overwriting default tags as appropriate:
+        elif line[:1] == '*':
+            for line in open(install_prefix + line[1:].rstrip().replace("/", "\\")):
+                if "=" in line:
+                 tags_items.update({line.split("=")[0]:line.split("=")[1].replace("\n", "")})
+        elif line[:1] == "#":
+            continue
         targets.append(non_mod_dbr + "\\" + line.rstrip().replace("/", "\\"))
         
     for target in targets:
         for item in os.listdir(target):
             items.append(target + item)
-            
-    #get vanilla tags for items
-    for line in open(non_mod_tags_items):
-        if "=" in line:
-            tags_items.update({line.split("=")[0]:line.split("=")[1].replace("\n", "")})
     
     for item in items:
         process_item(item)

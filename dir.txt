@@ -34,3 +34,5 @@ records/items/gearweapons/guns2h/
 records/items/gearweapons/melee2h/
 records/items/gearweapons/shields/
 records/items/gearweapons/swords1h/
+#+/mods/Cornucopia003/database/records/items/gearhead/
+#*/mods/Cornucopia003/source/Text_EN/tags_cornucopia.txt
